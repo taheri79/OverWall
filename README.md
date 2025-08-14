@@ -1,2 +1,2 @@
 # OverWall
-OverWall Vpn App
+OverWall App
