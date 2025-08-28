@@ -1,0 +1,73 @@
+{
+  "dns": {
+    "servers": [
+      {
+        "type": "local",
+        "tag": "dns_proxy"
+      }
+    ],
+    "final": "dns_proxy"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "interface_name": "overwall",
+      "address": [
+        "192.168.123.1/30"
+      ],
+      "auto_route": true,
+      "stack": "mixed",
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "socks",
+      "tag": "proxy",
+      "server": "127.0.0.1",
+      "server_port": 1080
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "inbound": [
+          "tun"
+        ],
+        "outbound": "proxy"
+      },
+      {
+        "protocol": "dns",
+        "outbound": "direct"
+      },
+      {
+        "domain": [
+          "HOSTADDRESS"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "process_name": [
+          "xray"
+        ],
+        "outbound": "direct"
+      }
+    ],
+    "final": "proxy",
+    "find_process": true,
+    "auto_detect_interface": true
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true
+    }
+  }
+}
