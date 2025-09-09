@@ -25,7 +25,7 @@
       "type": "socks",
       "tag": "proxy",
       "server": "127.0.0.1",
-      "server_port": CONNECTPORT
+      "server_port": 1080
     },
     {
       "type": "direct",
@@ -72,3 +72,4 @@
   }
 
 }
+
